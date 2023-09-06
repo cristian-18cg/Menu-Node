@@ -67,6 +67,37 @@ const main = async () => {//programacion por promesas
         guardarDB(tareas.listadoArr);
         await pausa();
         break;
+
+case '6':
+    const tareasPendientes = tareas.listadoArr.filter(tarea => !tarea.completado);
+
+    if (tareasPendientes.length === 0) {
+        console.log('No hay tareas pendientes para borrar.');
+    } else {
+        console.log('Tareas pendientes:');
+        tareasPendientes.forEach((tarea, index) => {
+            console.log(`${index + 1}. ${tarea.desc}`);
+        });
+
+        const tareaAEliminarIndex = await leerInput('Ingrese el número de la tarea que desea eliminar: ');
+        const tareaAEliminar = tareasPendientes[tareaAEliminarIndex - 1];
+
+        if (tareaAEliminar) {
+            const confirmacion = await leerInput(`¿Está seguro que desea eliminar la tarea "${tareaAEliminar.desc}"? (s/n): `);
+            
+            if (confirmacion.toLowerCase() === 's') {
+                tareas.borrarTarea(tareaAEliminar.id);
+                console.log(`Tarea "${tareaAEliminar.desc}" eliminada.`);
+            }
+        } else {
+            console.log('Número de tarea inválido.');
+        }
+    }
+
+    guardarDB(tareas.listadoArr);
+    await pausa();
+    break;
+
       default:
         break;
     }
