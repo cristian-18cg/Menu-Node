@@ -30,7 +30,13 @@ class Tareas{
         }
         return false; // No se encontró ninguna tarea con el ID proporcionado.
     }
-    
+    borrarTarea(id) {
+        if (this._listado[id]) {
+            delete this._listado[id];
+            return true; // Tarea eliminada correctamente.
+        }
+        return false; // No se encontró una tarea con el ID proporcionado.
+    }
 }
 
 module.exports=Tareas;
